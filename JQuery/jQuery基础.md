@@ -1,3 +1,11 @@
+[TOC]
+
+
+
+
+
+
+
 JQuery一款优秀的Javascript库
 能让我们对HTML文档便利和操作、时间处理、动画以及Ajax变得更加简单
 
@@ -371,5 +379,872 @@ $();代表调用jQuery的核心函数
 - `prevAll()` - 被选元素的前面所有元素
 - `prevUntil()` - 被选元素到前面指定元素中间的所有元素
 
-# 操作属性结点
+# 操作属性节点
+
+## 原生JS操作属性节点
+
+**获取属性节点**：DOM对象.getAttribute("属性节点名称")
+**设置属性节点**：DOM对象.setAttribute("属性节点名称","值")
+
+## jQuery中的attr和prop方法
+
+### attr(name|pro|key,val|fn)方法
+
+用于设置或获取属性节点的值
+
+```html
+<script>
+        $(function () {
+            // 1.获取指定属性节点值
+            var $res = $(".span1").attr("nj");
+            console.log($res);
+            // 2.设置属性节点
+            $(".span1").attr("nj", "666");
+            $(".span2").attr("id", "box1 box2");
+
+            // 3.注意点:
+            // 3.1.获取属性节点时,只会获取找到所有元素中第一个元素的属性节点
+            $res = $("span").attr("class");
+            console.log($res);
+             $("span").attr("class", "lnj");
+        });
+</script>
+```
+
+### removeAttr(name)方法
+
+用于删除指定属性节点
+
+```html
+<script>
+        $(function () {
+            // 1.设置属性节点时,会给所有找到元素设置属性节点
+            $("span").attr("test", "jonathan");
+            // 2.删除属性节点时,会删除所有找到元素的属性节点
+            $("span").removeAttr("test");
+        });
+</script>
+```
+
+### prop(name|pro|key,val|fn)方法
+
+用于设置或获取元素的属性值
+
+```html
+<script>
+        $(function () {
+            // 1.设置属性
+            // 1.1.设置属性时,会设置所有找到元素的属性
+            $("span").prop("demo", "lnj");
+            // 2.获取属性
+            // 2.1.获取属性时,只会获取找到第一个元素的属性
+            console.log($("span").prop("demo"));
+        });
+</script>
+```
+
+### removeProp(name)方法
+
+用于删除指定属性节点
+
+```html
+<script>
+        $(function () {
+            // 删除所有找到元素的demo属性
+            $("span").removeProp("demo");
+        });
+</script>
+```
+
+### attr方法和prop方法区别
+
+既然所有的DOM对象，都有一个attributes属性,而prop可以操作属性,所以也可以操作属性节点
+
+官方推荐在操作属性节点时,具有 true 和 false 两个属性的属性节点，如 checked, selected 或者 disabled 使用prop()，其他的使用 attr()
+
+因为如果具有 true 和 false 两个属性的属性节点,如果没有编写默认attr返回undefined,而prop返回false
+
+```html
+<script>
+        $(function () {
+            // 1.可以通过prop获取属性节点
+            console.log($("input").prop("class"));
+            // 2.可以通过prop设置属性节点
+            $("input").prop("class", "tag");
+
+            // 3.如果没有默认值,那么attr获取返回undefined
+//            console.log($("input[type=checkbox]").attr("checked"));
+            // 4.如果没有默认值,那么prop获取返回false
+            console.log($("input[type=checkbox]").prop("checked"));
+            // 5.通过attr设置选中
+//            $("input[type=checkbox]").attr("checked", true);
+            
+            // 6.通过prop设置选中
+            $("input[type=checkbox]").prop("checked", true)
+
+        });
+</script>
+```
+
+## jQuery增删Class
+
+jQuery CSS类相关方法都是用于操作DOM对象的class属性节点的值
+
+### addClass(class|fn)
+
+给元素添加一个或多个类
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>08-jQueryCSS类</title>
+    <style>
+        .class1{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .class2{
+            border: 5px solid #000;
+        }
+    </style>
+    <script src="代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+           $("button").eq(0).click(function () {
+               // 1.添加一个类
+//               $("div").addClass("class1");
+               // 2.再添加一个类
+//               $("div").addClass("class2");
+               // 3.一次性添加多个类(用空格隔开)
+               $("div").addClass("class1 class2");
+           });
+        });
+    </script>
+</head>
+<body>
+<button>添加</button>
+<button>删除</button>
+<button>切换</button>
+<div></div>
+</body>
+</html>
+```
+
+### removeClass([class|fn])
+
+删除元素的一个或多个类
+
+```html
+<script>
+        $(function () {
+            $("button").eq(1).click(function () {
+                // 4.删除一个类
+//                $("div").removeClass("class2");
+                // 5.再删除一个类
+//                $("div").removeClass("class1");
+                // 6.一次性删除多个类(用空格隔开)
+                $("div").removeClass("class1 class2");
+
+            });
+        });
+</script>
+```
+
+### toggleClass(class|fn,[sw])
+
+添加或删除一个类（存在就删除，不存在就添加）
+
+```html
+<script>
+        $(function () {
+            $("button").eq(2).click(function () {
+                // 7.切换一个类
+//                $("div").toggleClass("class2");
+                // 8.切换多个类
+                $("div").toggleClass("class1 class2");
+            });
+        });
+    </script>
+```
+
+## jQuery操作文本/值
+
+### html([val|fn])
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>09-jQuery代码文本值</title>
+    <script src="代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            var $btns = $("button");
+            var $div = $("div");
+            $btns.eq(0).click(function () {
+                // 1.添加html, 相当于innerHTML
+//                $div.html("<p>我是p标签</p>");
+//                $div.html("<p><span>我是span标签</span></p>");
+                $div.html("我是文本");
+            });
+            $btns.eq(1).click(function () {
+                // 2.获取html
+                console.log($div.html());
+            });
+        });
+    </script>
+</head>
+<body>
+<button>添加html</button>
+<button>获取html</button>
+<button>添加文本</button>
+<button>获取文本</button>
+<div></div>
+</body>
+</html>
+```
+
+### text([val|fn])
+
+添加或获取元素中的文本
+
+text方法能做的html方法都能做，所以一般使用html方法即可
+
+```html
+<script>
+        $(function () {
+            $btns.eq(2).click(function () {
+                // 3.添加文本, 相当于innerText
+                // 如下内容不会被转换为标签
+//                $div.text('<p>我是段落</p>');
+               $div.text('我是文本');
+            });
+            $btns.eq(3).click(function () {
+                // 4.获取文本
+                console.log($div.text());
+            });
+</script>
+```
+
+### val([val|fn])
+
+添加或获取元素value属性的值
+
+```html
+<script>
+        $(function () {
+            $btns.eq(4).click(function () {
+                // 4.添加value值
+                $("input").val("我是一个输入框");
+            });
+            $btns.eq(5).click(function () {
+                // 4.获取value值
+                console.log($("input").val());
+            });
+        });
+</script>
+```
+
+# 事件处理
+
+## 事件绑定
+
+jQuery中事件绑定有两种方式
+
+**eventName(function() { })**：绑定对应事件名的监听
+例如：$('#div').click(function() { });
+
+**on(eventName,function() { })**：通用的绑定事件监听
+例如：$('#div').on('click',function() { });
+
+**优缺点**：eventName编码方便，但有的事件监听不支持；on编码不方便，但更通用（能用enentName就用，不能就用on)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13-jQuery事件绑定和解绑</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background: red;
+            overflow: hidden;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background: blue;
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+    </style>
+    <script src="../day01/代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            /*
+            // 1.通过eventName绑定事件
+            $(".son").click(function () {
+                alert("son");
+            });
+            // 2.通过on绑定事件
+           $(".son").on("click", function () {
+               alert("son");
+           });
+             */
+
+            // 2.可以多次添加相同类型的监听,后面添加不会覆盖前面添加
+            function test1() {
+                alert("son1");
+            }
+            function test2() {
+                alert("son2");
+            }
+            function test3() {
+                alert("son3");
+            }
+            $(".son").click(test1);
+            $(".son").click(test2);
+            $(".son").on("mouseleave", test3);
+        });
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+</html>
+```
+
+## 事件解绑
+
+jQuery中可以通过==off(eventName,function)==;解绑事件
+
+示例:
+
+```html
+<script>
+        $(function () {
+            function test1() {
+                alert("son1");
+            }
+            function test2() {
+                alert("son2");
+            }
+            function test3() {
+                alert("son3");
+            }
+            $(".son").click(test1);
+            $(".son").click(test2);
+            $(".son").on("mouseleave", test3);
+
+            // 1.1不传入任何参数,移除所有事件
+//            $(".son").off();
+            // 1.2传入一个参数,移除指定事件
+//            $(".son").off("click");
+            // 1.3传入两个参数,移除指定事件中的指定回调
+            $(".son").off("click", test1);
+        });
+</script>
+```
+
+## 获取事件的坐标
+
+- 当事件被触发时,系统会将事件对象(event)传递给回调函数,通过event对象我们就能获取时间的坐标
+- 获取事件坐标有三种方式
+  - event.offsetX, event.offsetY 相对于事件元素左上角
+  - event.pageX, event.pageY  相对于页面的左上角
+  - event.clientX, event.clientY  相对于视口的左上角
+- event.page和event.client区别
+  - 网页是可以滚动的,而视口是固定的
+  - 所以想获取距离可视区域坐标通过event.client
+  - 想获取距离网页左上角的坐标通过event.client
+- 示例代码
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13-jQuery事件绑定和解绑</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background: red;
+            overflow: hidden;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background: blue;
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+    </style>
+    <script src="../day01/代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            // 获取事件的坐标
+            $(".son").click(function (event) {
+                // 获取相对于事件元素左上角坐标
+                console.log(event.offsetX, event.offsetY);
+                // 获取相对于视口左上角坐标
+                console.log(event.clientX, event.clientY);
+                // 获取相对于页面左上角坐标
+                console.log(event.pageX, event.pageY);
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+```
+
+## 阻止事件冒泡
+
+- 什么是事件冒泡?
+  - 事件冒泡是从目标元素逐级向上传播到根节点的过程
+  - 小明告诉爸爸他有一个女票,爸爸告诉爷爷孙子有一个女票,一级级向上传递就是事件冒泡
+- 如何阻止事件冒泡?
+  - 多数情况下，我们希望在触发一个元素的事件处理程序时，不影响它的父元素, 此时便可以使用停止事件冒泡
+
+
+
+```html
+<script>
+        $(function () {
+            $(".son").click(function (event) {
+                console.log(".son");
+                // 在子元素中停止事件冒泡,时间不会继续向上传播,所以父元素click方法不会被触发
+                event.stopPropagation();
+            });
+            $(".father").click(function () {
+                console.log(".father");
+            });
+        });
+</script>
+```
+
+## 阻止事件默认行为
+
+- 什么是默认行为?
+  - 网页中的元素有自己的默认行为,例如单击超链接后会跳转,点击提交表单按钮会提交
+- 如何阻止事件默认行为?
+  - 可以使用event.preventDefault();方法阻止事件默认行为方法
+
+
+
+```xml
+<script>
+        $(function () {
+            $("a").click(function (event) {
+                var str = $("a").attr("href");
+                // 如果超链接是百度就不跳转
+                if(str.indexOf("baidu") > 0){
+                    // 阻止默认行为
+                    event.preventDefault();
+                }
+            });
+        });
+</script>
+```
+
+
+
+```html
+<script>
+        $(function () {
+            $("form").submit(function () {
+                var userName = $("input[type='text']").val().length > 0;
+                var password =  $("input[type='password']").val().length > 0;
+                if(!userName && !password){
+                    event.preventDefault();
+                }
+            });
+        });
+</script>
+```
+
+## 自动触发事件
+
+- 什么是自动触发事件?
+  - 通过代码控制事件, 不用人为点击/移入/移除等事件就能被触发
+- 自动触发事件方式
+  - $("selector").trigger("eventName");
+    - 触发事件的同时会触发事件冒泡
+    - 触发事件的同时会触发事件默认行为
+  - $("selector").triggerHandler("eventName");
+    - 触发事件的同时不会触发事件冒泡
+    - 触发事件的同时不会触发事件默认行为
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13-自动触发事件</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+    <script src="../day01/代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            /*
+            $(".son").click(function () {
+                alert("son");
+            });
+            $(".father").click(function () {
+                alert("father");
+            });
+
+            // trigger会触发事件冒泡
+//            $(".father").trigger("click");
+//            $(".son").trigger("click");
+
+            // triggerHandler不会触发事件冒泡
+//            $(".father").triggerHandler("click");
+//            $(".son").triggerHandler("click");
+            */
+
+            $("input[type='submit']").click(function () {
+                alert("点击了A标签");
+            });
+            // trigger会触发系统默认事件
+//            $("input[type='submit']").trigger("click");
+            // triggerHandler不会触发系统默认事件
+            $("input[type='submit']").triggerHandler("click");
+
+        });
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+
+<form action="http://www.baidu.com">
+    <input type="text">
+    <input type="password">
+    <input type="submit" name="sub" value="提交">
+</form>
+</body>
+</html>
+```
+
+## 事件命名空间和自定义事件
+
+- **什么是自定义事件?**
+  - 自定义事件就是自己虾XX起一个不存在的事件名称来注册事件, 然后通过这个名称还能触发对应的方法执行, 这就是传说中的自定义事件
+- 自定义事件的前提条件
+  - 1.事件必须是通过on绑定的
+  - 2.事件必须通过trigger来触发
+  - 因为trigger方法可以自动触发对应名称的事件,所以只要事件的名称和传递给trigger的名称一致就能执行对应的事件方法
+
+```html
+<script>
+       $(function () {
+           $(".father").on("njClick", function () {
+               alert("njClick");
+           });
+           $(".father").trigger("njClick");
+       });
+   </script>
+```
+
+- **什么是事件命名空间?**
+- 众所周知一个元素可以绑定多个相同类型的事件.企业多人协同开发中,如果多人同时给某一个元素绑定了相同类型的事件,但是事件处理的方式不同,就可能引发事件混乱
+- 为了解决这个问题jQuery提出了事件命名空间的概念
+  - 事件命名空间主要用于区分相同类型的事件,区分不同前提条件下到底应该触发哪个人编写的事件
+  - 格式: "eventName.命名空间"
+- 添加事件命名空间的前提条件
+  - 1.事件是通过on来绑定的
+  - 2.通过trigger触发事件
+- 注意点(面试题!!!面试题!!!面试题!!!):
+  - 不带命名空间事件被trigger调用,会触发带命名空间事件
+  - 带命名空间事件被trigger调用,只会触发带命名空间事件
+  - 下级不带命名空间事件被trigger调用,会冒泡触发上级不带命名空间和带命名空间事件
+  - 下级带命名空间事件被trigger调用,不会触发上级不带命名空间事件
+  - 下级带命名空间事件被trigger调用,会触发上级带命名空间事件
+- 示例:
+
+```html
+<script>
+        $(function () {
+            // 给父元素添加不带命名空间事件
+            $(".father").on("click", function () {
+                alert("father");
+            });
+            // 给父元素添加带命名空间事件
+            $(".father").on("click.66", function () {
+                alert("66 - father");
+            });
+
+            $(".son").on("click.nj", function () {
+                alert("nj - 向左走");
+            });
+            $(".son").on("click.66", function () {
+                alert("66 - 向右走");
+            });
+            // 会同时触发NJ和66编写的click事件
+            // 事件会冒泡到不带命名空间上级元素和带相同命名空间的上级元素
+//            $(".son").trigger("click");
+            // 只会触发NJ编写的click事件
+            // 事件不会冒泡到不带命名空间上级元素
+//            $(".son").trigger("click.nj");
+            // 只会触发66编写的click事件
+            // 事件只会冒泡到带相同命名空间的上级元素
+            $(".son").trigger("click.66");
+        });
+</script>
+```
+
+## 事件委托
+
+- 什么是事件委托?
+  - 例如: 张三在寝室不想去食堂吃饭,那么张三可以"委托"李四帮忙带一份饭
+  - 例如: 张三先找房,但是对要找房的地点又不熟悉,那么张三可以"委托"中介帮忙找房
+  - 所以得出结论:
+    - 事件委托就是请其他人帮忙做我们想做的事
+    - 做完之后最终的结果还是会反馈到我们这里
+- js中事件委托的好处
+  - 减少监听数量
+    - 添加到页面上的事件处理程序数量将直接关系到页面的整体运行性能，因为需要不断的与dom节点进行交互，访问dom的次数越多，引起浏览器重绘与重排的次数也就越多，就会延长整个页面的交互就绪时间
+    - 每个监听的函数都是一个对象，是对象就会占用内存，对象越多，内存占用率就越大，自然性能就越差
+    - ... ...
+  - 新增元素自动有事件响应处理
+    - 默认情况下新增的元素无法响应新增前添加的事件
+- jQuery中如何添加事件委托
+- 添加前
+  - $("li").click隐式迭代给界面上所有li都添加了click事件(监听数量众多)
+  - 通过$("ul").append新添加的li无法影响click事件
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>18-jQuery事件委托</title>
+    <script src="../day01/代码/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            // 1.监听li点击事件
+            $("li").click(function () {
+                // 弹出当前点击行内容
+                alert($(this).html());
+            });
+
+            // 2.监听新增按钮点击
+            var count = 0;
+            $("button").eq(0).click(function () {
+                count++;
+                // 新增一行内容
+                $("ul").append("<li>我是新增内容"+count+"</li>")
+            });
+        });
+    </script>
+</head>
+<body>
+<ul>
+    <li>我是第1行</li>
+    <li>我是第2行</li>
+    <li>我是第3行</li>
+</ul>
+<button>新增一行</button>
+<button>移除事件委托</button>
+</body>
+</html>
+```
+
+- 添加后
+  - 格式:$(parentSelector).delegate(childrenSelector, eventName, callback)
+  - $("ul").delegate隐式迭代所有ul添加事件(相比开始迭代li,必然ul的个数会少很多)
+  - 当事件被触发时,系统会自动动态查找当前是哪个li触发了事件,所以新增的li也能响应到事件
+
+```html
+<script>
+        $(function () {
+            // 1.委托ul监听li的点击事件
+            $("ul").delegate("li","click",function () {
+                // 前面我们说过事件委托就是让别人帮忙做事,但最终的结果还是会返回到我们手里,所以这里的this是触发事件的li
+                // 这里的this之所以是触发事件的li,本质是因为"事件冒泡", 触发事件的li向上传递到ul,触发了click事件.
+//                console.log(this);
+                // 弹出当前点击行内容
+                alert($(this).html());
+            });
+
+            // 2.监听新增按钮点击
+            var count = 0;
+            $("button").eq(0).click(function () {
+                count++;
+                // 新增一行内容
+                $("ul").append("<li>我是新增内容"+count+"</li>")
+            });
+        });
+</script>
+```
+
+## 移入移出事件
+
+- mouseenter和mouseleave
+  - 移动到子元素**不会**触发事件
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>14-jQuery移入移除事件</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+    <script src="../code/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            // 移动到子元素不会触发事件
+             // 2.1移入事件
+             $('.father').mouseenter(function () {
+               console.log('mouseenter');
+             });
+             // 2.2移除事件
+             $('.father').mouseleave(function () {
+               console.log('mouseleave');
+             });
+        });
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+</html>
+```
+
+- mouseover和mouseout
+  - 移动到子元素==会==触发事件
+
+```html
+<script>
+        $(function () {
+             // 2.1移入事件
+             $('.father').mouseover(function () {
+               console.log('mouseover') ;
+             });
+             // 2.2移除事件
+             $('.father').mouseout(function () {
+               console.log('mouseout') ;
+             });
+        });
+</script>
+```
+
+- hover
+  - 内容监听移入和移出
+  - 内部实现就是调用mouseenter和mouseleave
+
+```html
+<script>
+        $(function () {
+            /*
+           // 传入两个回调函数,一个监听移入,一个监听移出
+            $(".father").hover(function () {
+                console.log("mouseenter");
+            }, function () {
+                console.log("mouseleave");
+            });
+            */
+            // 如果只传入一个方式,那么这个方式既监听移入也监听移出
+            $(".father").hover(function () {
+                console.log("移入移除");
+            });
+        });
+</script>
+```
 
