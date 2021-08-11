@@ -269,7 +269,7 @@ $();代表调用jQuery的核心函数
 也是遍历对象或数组
 但是与each不同的是map讲回调函数的返回值组成一个新的数组返回
 
-```javascript
+```jsx
         $(function () {
             // 4.1遍历数组
             var arr = [1, 3, 5, 7, 9];
@@ -1160,7 +1160,7 @@ jQuery中可以通过==off(eventName,function)==;解绑事件
 ## 移入移出事件
 
 - mouseenter和mouseleave
-  - 移动到子元素**不会**触发事件
+  - 移动到子元素==不会==触发事件
 
 ```html
 <!DOCTYPE html>
@@ -1172,7 +1172,7 @@ jQuery中可以通过==off(eventName,function)==;解绑事件
         *{
             margin: 0;
             padding: 0;
-        }
+        }4444444
         .father{
             width: 200px;
             height: 200px;
@@ -1248,9 +1248,522 @@ jQuery中可以通过==off(eventName,function)==;解绑事件
 </script>
 ```
 
+## 移入移出练习
 
+鼠标移动到哪一行，哪一行展开效果
+![img](https://upload-images.jianshu.io/upload_images/647982-a3cd95eba82d64fc.png?imageMogr2/auto-orient/strip|imageView2/2/w/776/format/webp)
 
+```html
+<script>
+        $(function () {
+            // 1.监听li标签移入事件
+            $("li").mouseenter(function () {
+                console.log("mouseenter");
+                // 当移入时候给当天li标签加上current类
+                $(this).addClass("current");
+            });
+            // 2.监听li标签移出事件
+            $("li").mouseleave(function () {
+                console.log("mouseleave");
+                // 当移入时候移除原有li标签的current类
+                $(this).removeClass("current");
+            });
+        });
+</script>
+```
 
+鼠标移动到哪个选项卡就显示哪个选项卡对应的图片
+![img](https://upload-images.jianshu.io/upload_images/647982-034db9998d82e81f.png?imageMogr2/auto-orient/strip|imageView2/2/w/1116/format/webp)
 
+```html
+<script>
+        $(function () {
+            // 1.监听tab的移入事件
+            $("li").mouseenter(function () {
+                // 2.修改当前移入tab背景
+                $(this).addClass("cur");
+                // 3.移除其它tab背景
+                $(this).siblings().removeClass("cur");
+                // 4.获取当前移入tab索引
+                var $idx = $(this).index();
+                // 5.找到对应索引的img
+                var $img = $("img").eq($idx);
+                // 6.让对应索引的图片显示
+                $img.addClass("show");
+                // 7.让其它所有图片隐藏
+                $img.siblings().removeClass("show");
 
+            });
+        });
+</script>
+```
 
+鼠标移动到哪个序号就显示哪个序号对应的图片![img](https://upload-images.jianshu.io/upload_images/647982-be90a3d292b4db5d.png?imageMogr2/auto-orient/strip|imageView2/2/w/1119/format/webp)
+
+```html
+<script>
+        $(function () {
+            // 1.监听索引移入事件
+            $(".index>li").mouseenter(function () {
+                // 2.给移入的索引添加背景,其它索引删除背景
+                $(this).addClass("cur").siblings().removeClass("cur");
+                // 3.找到当前移入索引的序号
+                var $idx = $(this).index();
+                // 4.找到序号对应的图片
+                var $li = $(".content>li").eq($idx);
+                // 5.显示对应图片,并且让其它图片小事
+                $li.addClass("show").siblings().removeClass("show");
+            });
+        });
+</script>
+```
+
+# 动画效果
+
+## 显示、隐藏动画
+
+**[show([s,[e\],[fn]])]**
+
+- 显示动画
+- 内部实现原理根据当前操作的元素是块级还是行内决定, 块级内部调用display:block;,行内内部调用display:inline;
+
+```jsx
+// 编写jQuery相关代码
+$("button").eq(0).click(function () {
+    // $("div").css("display", "block");
+    // 注意: 这里的时间是毫秒
+    $("div").show(1000, function () {
+        // 作用: 动画执行完毕之后调用
+        alert("显示动画执行完毕");
+    });
+});
+```
+
+**[hide([s,[e\],[fn]])]**
+
+- 隐藏动画
+
+```jsx
+$("button").eq(1).click(function () {
+    // $("div").css("display", "none");
+    $("div").hide(1000, function () {
+        alert("隐藏动画执行完毕");
+    });
+});
+```
+
+**[toggle([spe\],[eas],[fn])]**
+
+- 切换动画(显示变隐藏,隐藏变显示)
+
+```jsx
+$("button").eq(2).click(function () {
+    $("div").toggle(1000, function () {
+        alert("切换动画执行完毕");
+    });
+});
+```
+
+**注意事项**:
+
+- show(1000, function () {};) 第一个参数单位是毫秒, 1000毫秒等于1秒
+- 默认的动画时长是400毫秒
+- 除了指定毫秒以外还可以指定三个预设参数 slow、normal、fast
+  - slow本质是600毫秒
+  - normal本质是400毫秒
+  - fast本质是200毫秒
+- 其它两个方法同理可证
+
+## 展开、收起动画
+
+参数、注意事项和显示隐藏动画一模一样, 只不过动画效果不一样而已
+
+**[slideDown([s\],[e],[fn])]**
+
+- 展开动画
+
+```jsx
+$("button").eq(0).click(function () {
+    $("div").slideDown(1000, function () {
+        alert("展开完毕");
+    });
+});
+```
+
+**[slideUp([s,[e\],[fn]])]**
+
+- 收起动画
+
+```jsx
+$("button").eq(1).click(function () {
+    $("div").slideUp(1000, function () {
+        alert("收起完毕");
+    });
+});
+```
+
+**[slideToggle([s\],[e],[fn])]**
+
+- 切换动画(展开变收起,收起变展开)
+
+```jsx
+$("button").eq(2).click(function () {
+    $("div").slideToggle(1000, function () {
+        alert("收起完毕");
+    });
+});
+```
+
+------
+
+### 淡入、淡出动画
+
+参数、注意事项和显示隐藏动画一模一样, 只不过动画效果不一样而已
+
+**[fadeIn([s\],[e],[fn])]**
+
+- 淡入动画
+
+```jsx
+$("button").eq(0).click(function () {
+    $("div").fadeIn(1000, function () {
+        alert("淡入完毕");
+    });
+});
+```
+
+**[fadeOut([s\],[e],[fn])]**
+
+- 淡出动画
+
+```jsx
+$("button").eq(1).click(function () {
+    $("div").fadeOut(1000, function () {
+        alert("淡出完毕");
+    });
+});
+```
+
+**[fadeToggle([s,[e\],[fn]])]**
+
+- 切换动画(显示变淡出,不显示变淡入)
+
+```jsx
+$("button").eq(2).click(function () {
+    $("div").fadeToggle(1000, function () {
+        alert("切换完毕");
+    });
+});
+```
+
+**[fadeTo([[s\],o,[e],[fn]])]**
+
+- 淡入到指定透明度动画
+- 可以通过第二个参数,淡入到指定的透明度(取值范围0~1)
+
+```jsx
+$("button").eq(3).click(function () {
+    $("div").fadeTo(1000, 0.2, function () {
+        alert("淡入完毕");
+    })
+});
+```
+
+## 自定义动画
+
+有时候jQuery中提供的集中简单的固定动画无法满足我们的需求, 所以jQuery还提供了一个自定义动画方法来满足我们复杂多变的需求
+
+**[animate(p,[s\],[e],[fn])]**
+
+```jsx
+/*
+第一个参数: 接收一个对象, 可以在对象中修改属性
+第二个参数: 指定动画时长
+第三个参数: 指定动画节奏, 默认就是swing
+第四个参数: 动画执行完毕之后的回调函数
+*/
+$(".two").animate({
+    marginLeft: 500
+}, 5000, "linear", function () {
+    // alert("自定义动画执行完毕");
+});
+```
+
+每次开始运动都必须是初始位置或者初始状态,如果想在上一次位置或者状态下再次进行动画可以使用累加动画
+
+```jsx
+$("button").eq(1).click(function () {
+    $(".one").animate({
+        width: "+=100"
+    }, 1000, function () {
+        alert("自定义动画执行完毕");
+    });
+});
+```
+
+同时操作多个属性,自定义动画会执行同步动画,多个被操作的属性一起执行动画
+
+```javascript
+$(".one").animate({
+    width: 500,
+    height: 500
+}, 1000, function () {
+    alert("自定义动画执行完毕");
+});
+```
+
+## 动画队列
+
+多个动画方法链式编程,会等到前面的动画执行完毕再依次执行后续动
+
+```jsx
+$("div").slideDown(1000).slideUp(1000).show(1000);
+
+$(".one").slideDown(1000,function () {
+    $(".one").slideUp(1000, function () {
+        $(".one").show(1000);
+    });
+});
+```
+
+但是如果后面紧跟一个非动画方法则会被立即执行
+
+```dart
+// 立刻变为黄色,然后再执行动画
+$(".one").slideDown(1000).slideUp(1000).show(1000).css("background", "yellow");
+```
+
+如果想颜色再动画执行完毕之后设置, 1.使用回调 2.使用动画队列
+
+```jsx
+$(".one").slideDown(1000,function () {
+    $(".one").slideUp(1000, function () {
+        $(".one").show(1000, function () {
+            $(".one").css("background", "yellow")
+        });
+    });
+});
+
+$(".one").slideDown(1000).slideUp(1000).show(1000).queue(function () {
+    $(".one").css("background", "yellow")
+});
+```
+
+注意点:
+
+- 动画队列方法queue()后面不能继续直接添加queue()
+- 如果想继续添加必须在上一个queue()方法中next()方法
+
+```jsx
+$(".one").slideDown(1000).slideUp(1000).show(1000).queue(function (next) {
+    $(".one").css("background", "yellow");
+    next(); // 关键点
+}).queue(function () {
+    $(".one").css("width", "500px")
+});
+```
+
+## 动画相关方法
+
+**delay(d,[q])**
+
+- 设置动画延迟时长
+
+```jsx
+$(".one").animate({
+    width: 500
+    // height: 500
+}, 1000).delay(2000).animate({
+    height: 500
+}, 1000);
+```
+
+**[stop([c\],[j])]**
+
+- 停止指定元素上正在执行的动画
+
+```jsx
+// 立即停止当前动画, 继续执行后续的动画
+// $("div").stop();
+// $("div").stop(false);
+// $("div").stop(false, false);
+
+// 立即停止当前和后续所有的动画
+// $("div").stop(true);
+// $("div").stop(true, false);
+
+// 立即完成当前的, 继续执行后续动画
+// $("div").stop(false, true);
+
+// 立即完成当前的, 并且停止后续所有的
+$("div").stop(true, true);
+```
+
+# 文档处理
+
+## 添加节点
+
+### 内部插入
+
+**[append(content|fn)]**
+
+- appendTo(content)
+  - 将元素添加到指定元素内部的最后
+
+```php
+// 1.创建一个节点
+var $li = $("<li>新增的li</li>");
+// 2.添加节点
+// $("ul").append($li);
+$li.appendTo("ul");
+```
+
+**[prepend(content|fn)]**
+
+- prependTo(content)
+  - 将元素添加到指定元素内部的最前面
+
+```php
+// 1.创建一个节点
+var $li = $("<li>新增的li</li>");
+// 2.添加节点
+// $("ul").prepend($li);
+$li.prependTo("ul");
+```
+
+### 外部插入
+
+**[after(content|fn)]**
+
+- insertAfter(content)
+  - 将元素添加到指定元素外部的后面
+
+```php
+// 1.创建一个节点
+var $li = $("<li>新增的li</li>");
+// 2.添加节点
+// $("ul").after($li);
+$li.insertAfter("ul");
+```
+
+**[before(content|fn)]**
+
+- insertBefore(content)
+  - 将元素添加到指定元素外部的前面
+
+```php
+// 1.创建一个节点
+var $li = $("<li>新增的li</li>");
+// 2.添加节点
+// $("ul").before($li);
+$li.insertBefore("ul");
+```
+
+## 删除节点
+
+**empty()**
+
+- 删除指定元素的内容和子元素, 指定元素自身不会被删除
+
+```jsx
+$("div").empty();
+```
+
+**remove([expr])**
+
+- 删除指定元素
+
+```csharp
+// 删除所有div
+$("div").remove();
+// 删除div中id是box1的那个div
+$("div").remove("#box1");
+```
+
+**detach([expr])**
+
+```jsx
+// 删除所有div
+$("div").detach();
+// 删除div中id是box1的那个div
+$("div").detach("#box1");
+```
+
+**remove和detach区别**
+
+- remove删除元素后,元素上的事件会被移出
+- detach删除元素后,元素上的事件会被保留
+
+```jsx
+$("button").click(function () {
+    // $("div").remove();
+    // $("div").empty();
+    // $("li").remove(".item");
+
+    // 利用remove删除之后再重新添加,原有的事件无法响应
+    // var $div = $("div").remove();
+    // 利用detach删除之后再重新添加,原有事件可以响应
+    var $div = $("div").detach();
+    // console.log($div);
+    // 将删除的返回值重新添加到body上
+    $("body").append($div);
+});
+$("div").click(function () {
+    alert("div被点击了");
+});
+```
+
+## 替换节点
+
+**replaceWith(content|fn)**
+
+- 将所有匹配的元素替换成指定的HTML或DOM元素
+- replaceWith参数可以是一个DOM元素
+- replaceWith参数也可以是一个代码片段
+
+**replaceAll(selector)**
+
+- 用匹配的元素替换掉所有 selector匹配到的元素
+
+```jsx
+// 编写jQuery相关代码
+$("button").click(function () {
+    // 创建一个新的节点
+    var $item = $("<h6>我是标题6</h6>");
+    // 利用新的节点替换旧的节点
+    // $("h1").replaceWith($item);
+    $item.replaceAll("h1");
+});
+```
+
+## 复制节点
+
+**[clone([Even[,deepEven\]])]**
+
+- 复制一个节点
+- 浅复制不会复制节点的事件
+- 深复制会复制节点的事件
+
+```jsx
+$(function () {
+    // clone([Even[,deepEven]])
+    $("button").eq(0).click(function () {
+        // 1.浅复制一个元素
+        var $li = $("li:first").clone(false);
+        // 2.将复制的元素添加到ul中
+        $("ul").append($li); // 点击li无法响应事件
+    });
+    $("button").eq(1).click(function () {
+        // 1.深复制一个元素
+        var $li = $("li:first").clone(true);
+        // 2.将复制的元素添加到ul中
+        $("ul").append($li); // 点击li可以响应事件
+    });
+
+    $("li").click(function () {
+        alert($(this).html());
+    });
+});
+```
+
+## 包裹节点                                                                                                                                                                          
