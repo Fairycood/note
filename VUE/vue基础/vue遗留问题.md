@@ -7,7 +7,7 @@
 * 这次遇到的需求是使用form时绑定一个对象的计算属性，里面的input绑定form对象里面的属性。刚开始我还以为要给这个对象变量同时设置get和set。可以后面根据计算属性的定义来说，根本就不需要了
 * 计算属性是当get依赖的数据发生变化时，才会触发get，我的计算属性get依赖的属性是address，可是每次我在input中输入的时候更改的就不是address对象，更改的是address对象里面的属性，在vue里面直接更改对象的属性应该是不会触发响应式的，所以不需要使用set。
 
-```js
+```vue
 // template的模板
 // :model="editForm" 在v-model中使用了计算属性，不需要set方法的原因是，计算属性没有被改变(vue中对象的属性被改变应该不会触发响应式)
 <el-form :model="editForm">
