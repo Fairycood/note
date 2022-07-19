@@ -18,8 +18,15 @@
 #### css的方式解决
 结合伪类选择器以及兄弟选择器的使用，通过控制默认插槽的display属性来控制它的显示
 ```css
-```
+.header  .slot:empty + .default {
+	display: flex;
+}
 
+.header  .default {
+	display: none;
+}
+```
+在使用组件过程中当没有写入插槽时，
 
 
 
@@ -31,6 +38,6 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM2ODIzMTQwMiwtODgyNDYzNTM1LDIwND
-AyOTc2MjJdfQ==
+eyJoaXN0b3J5IjpbNTk5OTY5MjQxLC04ODI0NjM1MzUsMjA0MD
+I5NzYyMl19
 -->
