@@ -26,7 +26,8 @@
 	display: none;
 }
 ```
-在使用组件过程中当没有写入插槽时，
+先把默认插槽的display属性设置为none，在使用组件过程中当没有写入插槽时，则它的display属性变成flex
+这种方案的实现巧妙地
 
 
 
@@ -38,6 +39,6 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTk5OTY5MjQxLC04ODI0NjM1MzUsMjA0MD
-I5NzYyMl19
+eyJoaXN0b3J5IjpbMTc3NjU0MzI2OCwtODgyNDYzNTM1LDIwND
+AyOTc2MjJdfQ==
 -->
