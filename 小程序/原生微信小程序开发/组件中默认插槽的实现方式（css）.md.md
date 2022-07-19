@@ -16,6 +16,9 @@
 ```
 缺点：这种方案比较繁琐，需要额外创建一个变量来控制默认插槽的显示，不够优雅
 #### css的方式解决
+结合伪类选择器以及兄弟选择器的使用，通过控制默认插槽的display属性来控制它的显示
+```css
+```
 
 
 
@@ -28,6 +31,6 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEzMDM4NjM5LC04ODI0NjM1MzUsMjA0MD
-I5NzYyMl19
+eyJoaXN0b3J5IjpbLTM2ODIzMTQwMiwtODgyNDYzNTM1LDIwND
+AyOTc2MjJdfQ==
 -->
