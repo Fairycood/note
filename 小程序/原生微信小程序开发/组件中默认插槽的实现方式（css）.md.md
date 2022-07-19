@@ -3,9 +3,28 @@
 #### wx:if
 在js文件中维护一个变量来控制默认插槽的显示
 
-    e
+    <view  class="right"  wx:if="{{showRight}}">
+	    <view  class="slot"><slot></slot></view>
+	    <view  class="default">
+		    <text>{{rightText}}</text>
+		    <image  class="icon" 
+     src="/assets/images/icons/arrow-right.png"></image>
+     </view>
+     </view>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTY5NDAyMzE1LC04ODI0NjM1MzUsMjA0MD
-I5NzYyMl19
+eyJoaXN0b3J5IjpbMTIwODI5MTU3OCwtODgyNDYzNTM1LDIwND
+AyOTc2MjJdfQ==
 -->
