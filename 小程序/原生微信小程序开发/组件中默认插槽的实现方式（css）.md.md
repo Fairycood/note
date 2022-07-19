@@ -3,8 +3,9 @@
 #### wx:if
 在js文件中维护一个变量来控制默认插槽的显示
 
+    e
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExODAxNjcwNTQsLTg4MjQ2MzUzNSwyMD
-QwMjk3NjIyXX0=
+eyJoaXN0b3J5IjpbOTY5NDAyMzE1LC04ODI0NjM1MzUsMjA0MD
+I5NzYyMl19
 -->
