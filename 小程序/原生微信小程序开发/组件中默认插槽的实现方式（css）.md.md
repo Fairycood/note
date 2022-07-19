@@ -5,12 +5,12 @@
 
     <view  class="right"  wx:if="{{showRight}}">
 	    <view  class="slot"><slot></slot></view>
-	    <view  class="default">
+	    <view  class="default" wx:if="{{showMore}}">
 		    <text>{{rightText}}</text>
-		    <image  class="icon" 
-     src="/assets/images/icons/arrow-right.png"></image>
-     </view>
-     </view>
+		    <image  class="icon" src="/assets/images/icons/arrow-right.png">
+		     </image>
+	    </view>
+    </view>
 
 
 
@@ -25,6 +25,6 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIwODI5MTU3OCwtODgyNDYzNTM1LDIwND
-AyOTc2MjJdfQ==
+eyJoaXN0b3J5IjpbOTI4OTExNDYzLC04ODI0NjM1MzUsMjA0MD
+I5NzYyMl19
 -->
