@@ -6,7 +6,7 @@
 <view  class="right"  wx:if="{{showRight}}">
 	//插槽
 	<view  class="slot"><slot></slot></view>
-	//当没有插槽
+	//当没有插槽时默认显示的插槽（默认插槽）
 	<view  class="default" wx:if="{{showMore}}">
 		<text>{{rightText}}</text>
 		<image  class="icon" src="/assets/images/icons/arrow-right.png">
@@ -14,7 +14,8 @@
 	</view>
 </view>
 ```
-
+缺点：这种方案比较繁琐，需要额外创建一个变量来控制默认插槽的显示，不够优雅
+#### css的方式解决
 
 
 
@@ -27,6 +28,6 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg5Mjc1MTg2OSwtODgyNDYzNTM1LDIwND
-AyOTc2MjJdfQ==
+eyJoaXN0b3J5IjpbMjEzMDM4NjM5LC04ODI0NjM1MzUsMjA0MD
+I5NzYyMl19
 -->
